@@ -17,4 +17,5 @@ make VERSION=2.18.0
 ## Credit
 im just repacking this library \
 original creator of library is [FasterXML](https://github.com/FasterXML) \
+and is licensed under [Apache 2](https://www.apache.org/licenses/LICENSE-2.0) license \
 Original project: [Jackson](https://github.com/FasterXML/jackson/)

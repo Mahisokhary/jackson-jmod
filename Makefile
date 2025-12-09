@@ -1,3 +1,11 @@
+# im just repacking this library
+# original creator of library is https://github.com/FasterXML
+# and is licensed under https://www.apache.org/licenses/LICENSE-2.0 license
+# Original project: https://github.com/FasterXML/jackson/
+#
+# also current project is licensed with https://www.gnu.org/licenses/gpl-3.0.en.html license
+
+
 GROUP := com/fasterxml/jackson/core
 ARTIFACTS := jackson-core jackson-databind jackson-annotations
 VERSION := 2.18.5
@@ -7,6 +15,7 @@ BUILD_DIR := build/$(VERSION)
 JAR_DIR := $(BUILD_DIR)/jar
 CLASS_DIR := $(BUILD_DIR)/class
 JMOD_DIR := $(BUILD_DIR)/jmod
+LEGAL_NOTICES_DIR := $(BUILD_DIR)/legal_notices
 
 .SECONDARY:
 
@@ -31,9 +40,14 @@ $(CLASS_DIR)/%: $(JAR_DIR)/%.jar
 $(CLASS_DIR)/%/module-info.class: $(CLASS_DIR)/%
 	test -f $@ || cp $</META-INF/versions/9/module-info.class $@
 
-$(JMOD_DIR)/%.jmod: $(CLASS_DIR)/% $(CLASS_DIR)/%/module-info.class
+$(LEGAL_NOTICES_DIR): JACKSON_LICENSE LICENSE
+	mkdir -p $@
+	cp $^ $@
+
+$(JMOD_DIR)/%.jmod: $(CLASS_DIR)/% $(CLASS_DIR)/%/module-info.class $(LEGAL_NOTICES_DIR)
 	mkdir -p $(@D)
 	jmod create \
 		--module-version $(VERSION) \
 		--class-path $(CLASS_DIR)/$* \
+		--legal-notices $(LEGAL_NOTICES_DIR) \
 		$@
