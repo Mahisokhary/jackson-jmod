@@ -1,6 +1,6 @@
 GROUP := com/fasterxml/jackson/core
 ARTIFACTS := jackson-core jackson-databind jackson-annotations
-VERSION := 2.18.0
+VERSION := 2.18.5
 MAVEN_REPO := https://repo1.maven.org/maven2
 
 BUILD_DIR := build/$(VERSION)
