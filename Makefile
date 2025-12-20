@@ -36,15 +36,14 @@ $(JAR_DIR)/%.jar:
 $(CLASS_DIR)/%: $(JAR_DIR)/%.jar
 	mkdir -p $@
 	unzip -d $@ $<
-
-$(CLASS_DIR)/%/module-info.class: $(CLASS_DIR)/%
-	test -f $@ || cp $</META-INF/versions/9/module-info.class $@
+	test -f $@/module-info.class || cp $@/META-INF/versions/9/module-info.class $@/module-info.class
+	rm -rf $@/META-INF
 
 $(LEGAL_NOTICES_DIR): JACKSON_LICENSE LICENSE
 	mkdir -p $@
 	cp $^ $@
 
-$(JMOD_DIR)/%.jmod: $(CLASS_DIR)/% $(CLASS_DIR)/%/module-info.class $(LEGAL_NOTICES_DIR)
+$(JMOD_DIR)/%.jmod: $(CLASS_DIR)/% $(LEGAL_NOTICES_DIR)
 	mkdir -p $(@D)
 	jmod create \
 		--module-version $(VERSION) \
